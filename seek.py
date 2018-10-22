@@ -1,4 +1,3 @@
-
 import json
 
 module_names = set() # Ensures that module names are unique.  "start" and "end" are reserved.
@@ -35,13 +34,13 @@ class StartModule(ContentModule):
 		super(StartModule, self).__init__("start", html_body, link_to) #TODO switch to subclassing Module and change server code
 
 class QRModule(Module):
-	def __init__(self, name, html_body, link_to,target_type, root):
-		super(QRModule, self).__init__(name, link_to)
-                self.html_body = html_body
-		self.url = r"/qr/" + self.name
-		module_data[self.name] = {"url": self.url, "target": link_to, "data": {"html": html_body}}
-		import qr
-                qr.make_qr("qr/" + self.name + "_qr.png", root + '/' + target_type + '/' + self.link_to + '/')
+	def __init__(self, name, html_body, link_to, target_type, root):
+            super(QRModule, self).__init__(name, link_to)
+            self.html_body = html_body
+            self.url = r"/qr/" + self.name
+            module_data[self.name] = {"url": self.url, "target": link_to, "data": {"html": html_body}}
+            import modules.qr as qr
+            qr.make_qr("qr_images/" + self.name + "_qr.png", root + '/' + target_type + '/' + self.link_to + '/')
 
 class InteractiveModule(Module):
 	def __init__(self, name, link_to, module_type, extra_data_dict):
@@ -51,8 +50,8 @@ class InteractiveModule(Module):
 		module_data[self.name] = {"url": self.url, "target": self.link_to, "data" : extra_data_dict}
 
 class GPSModule(InteractiveModule):
-	def __init__(self, name, link_to, x_coordinate, y_coordinate):
-		super(GPSModule, self).__init__(name, link_to, "gps", {"x_coordinate": x_coordinate, "y_coordinate": y_coordinate})
+	def __init__(self, name, link_to, x_coordinate, y_coordinate, radius):
+		super(GPSModule, self).__init__(name, link_to, "gps", {"x_coordinate": x_coordinate, "y_coordinate": y_coordinate, "radius": radius})
 
 class FindObjectModule(InteractiveModule):
 	def __init__(self, name, link_to, object_name):

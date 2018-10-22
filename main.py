@@ -116,28 +116,6 @@ def upload():
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
-@app.route('/within/', methods=['POST'])
-def within():
-    import modules.gps as gps
-
-    x_coordinate = float(request.form['x_coordinate'])
-    y_coordinate = float(request.form['y_coordinate'])
-    lat_str = request.form['latitude']
-    long_str = request.form['longitude']
-    url = request.form['url']
-    target = request.form['target']
-
-    if not lat_str or not long_str:
-        return redirect(url, code=302)
-
-    latitude = float(lat_str)
-    longitude = float(long_str)
-
-    print(gps.distance_between((x_coordinate, y_coordinate), (latitude, longitude)))
-    if gps.within_radius((x_coordinate, y_coordinate), (latitude, longitude), 20):
-        return redirect(target, code=302)
-    return redirect(url, code=302)
-
 @app.route('/verify/', methods=['POST'])
 def verify():
     text = request.form['text']
