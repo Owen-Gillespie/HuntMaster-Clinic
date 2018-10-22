@@ -1,19 +1,18 @@
 # HuntMaster
-HuntMaster is a modular framework made to create puzzle hunts at the intersection of reality and technology.
-
-The creation of HuntMaster came about through an interest in puzzle/scavenger hunts. Our team desired to bring digital media into these kinds of experiences and to make it easy for anyone else to do so.
+HuntMaster is a modular framework made to create interactive puzzle hunts. You describe the hunt using our DSL, and HuntMaster creates a website to host it.
 
 ## What it does
-With HuntMaster, it's easy to create custom experiences known as hunts. You provide the story and tasks, HuntMaster does the heavy lifting.
+With HuntMaster, it's easy to create custom experiences known as hunts. You provide the story and tasks, HuntMaster does the heavy lifting of creating a webapp for your players to interact with the hunt. Each "Hunt" is made up of a sequence of modules. Modules can present parts of the story, require players to enter a passphrase, go to a location, scan a QR code, and more. The system is also easily extensible, so you can create your own modules and add them to your hunts.
 
-Want to create a guided tour of your campus? Make a hunt that directs players to various parts of your campus and automatically proceeds to the next part of the tour when they reach them by using their GPS. All you need to do is write a few lines of python, the instructions/descriptions, and deploy using HuntMaster.
+Want to create a guided tour of your campus? Make a hunt that directs players to various parts of your campus using their GPS. All you need to do is write a few lines of python, the instructions/descriptions, and deploy using HuntMaster.
 
-Want to play a cross between Bingo and a scavenger hunt where players are tasked with taking pictures of randomized items (e.g. basketballs, muffins) to cross them off their Bingo card? If you write the Bingo game logic, it's just a matter of interfacing with HuntMaster and then deploying.
-
-Most setup for a hunt is done in python, although if you want your resulting page to look nice it's worth writing some HTML/CSS. Currently HuntMaster supports feature detection of images (e.g. determining whether a picture for the hypothetical Bingo hunt is valid), GPS location tracking, image comparison, QR code generation, as well as basic forms of input (text, buttons, etc.). Interfacing with these functions is often a matter of a single call.
+## How to make a hunt:
+1. Write your hunt as a sequence of modules. Check out the examples directory for examples of how to do this.
+2. Run the ``save_module_data`` function from ``seek.py`` to export your hunt as a json file. Make sure that this file is in the same directory as ``main.py``
+3. Run ``main.py``. Check that the website is working locally in your browser.
 
 ## How we built it
-HuntMaster is built for the most part on python 2.7. It hosts a Flask server with a Bootstrap front-end. When a player in the hunt submits something, it's relayed to a python function which connects to whichever API is needed for that particular part of the hunt. If, for example, the player is tasked with finding an image of a dog, when she finds it and sends it to the server, the server then queries Google's Vision API to determine the contents of the picture. If it is of a dog, she'll receive the next part of the hunt.
+HuntMaster is built for the most part on python 3. It hosts a Flask server with a Bootstrap front-end. When a player in the hunt submits something, it's relayed to a python function which connects to whichever API is needed for that particular part of the hunt. 
 
 Regarding modules,
 * Feature detection is done through Google's Vision API
