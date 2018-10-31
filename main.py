@@ -116,10 +116,10 @@ def upload():
 def uploaded_file(filename):
     return send_from_directory(app.config['UPLOAD_FOLDER'], filename)
 
-@app.route('/verify/', methods=['POST'])
-def verify():
+@app.route('/verify/<module_name>', methods=['POST'])
+def verify(module_name):
     text = request.form['text']
-    correct_string = request.form['correct_string']
+    correct_string = layout[module_name]["data"]["correct_string"]
     target = request.form['target']
     url = request.form['url']
     if text == correct_string:
